@@ -98,18 +98,19 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                if (nums.Length == 0)
+                if (nums.Length == 0) // Checking if the array is empty
                     return 0;
 
-                int index = 1;
-                for (int i = 1; i < nums.Length; i++)
+                int index = 1; // Initializing index for the modified array
+
+                for (int i = 1; i < nums.Length; i++) // Iterating through the array starting from the second element
                 {
-                    if (nums[i] != nums[i - 1])
+                    if (nums[i] != nums[i - 1]) // Checking if the current element is different from the previous one
                     {
-                        nums[index++] = nums[i];
+                        nums[index++] = nums[i]; // If different, update the current index of the modified array with the current element
                     }
                 }
-                return index;
+                return index; // Returning the length of the modified array
             }
             catch (Exception)
             {
@@ -143,19 +144,20 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                int nonZeroIndex = 0;
-                for (int i = 0; i < nums.Length; i++)
+                int nonZeroIndex = 0; // Initializing index for non-zero elements
+
+                for (int i = 0; i < nums.Length; i++)// Iterating through the array
                 {
-                    if (nums[i] != 0)
+                    if (nums[i] != 0)   // If the current element is non-zero
                     {
-                        nums[nonZeroIndex++] = nums[i];
+                        nums[nonZeroIndex++] = nums[i]; // Move the non-zero element to the front of the array
                     }
                 }
-                while (nonZeroIndex < nums.Length)
+                while (nonZeroIndex < nums.Length) // Filling the remaining elements with zeros
                 {
                     nums[nonZeroIndex++] = 0;
                 }
-                return new List<int>(nums);
+                return new List<int>(nums); // Converting the modified array to a list and return
             }
             catch (Exception)
             {
@@ -205,31 +207,43 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
+                List<IList<int>> ans = new List<IList<int>>(); // Initializing a list to store the result
 
-                List<IList<int>> ans = new List<IList<int>>();
-                Array.Sort(nums);
-                int n = nums.Length;
+                Array.Sort(nums); // Sorting the input array
+
+                int n = nums.Length; // Length of the array
+
+                // Looping through the array until the third last element
+                // and until the current element is less than or equal to 0
                 for (int i = 0; i < n - 2 && nums[i] <= 0; ++i)
                 {
-                    if (i > 0 && nums[i] == nums[i - 1])
+                    if (i > 0 && nums[i] == nums[i - 1]) // Skip duplicates
                     {
                         continue;
                     }
-                    int j = i + 1, k = n - 1;
-                    while (j < k)
+                    int j = i + 1, k = n - 1; // Two pointers approach
+
+                    while (j < k) // While the two pointers haven't crossed each other
                     {
                         int x = nums[i] + nums[j] + nums[k];
+
+                        // If the sum is less than 0, move the left pointer
                         if (x < 0)
                         {
                             ++j;
                         }
+
+                        // If the sum is greater than 0, move the right pointer
                         else if (x > 0)
                         {
                             --k;
                         }
                         else
                         {
+                            // If the sum is 0, add the triplet to the result list
                             ans.Add(new List<int> { nums[i], nums[j--], nums[k--] });
+
+                            // Skip duplicates
                             while (j < k && nums[j] == nums[j + 1])
                             {
                                 ++j;
@@ -241,7 +255,7 @@ namespace ISM6225_Spring_2024_Assignment_2
                         }
                     }
                 }
-                return ans;
+                return ans; // Return the list of triplets
             }
             catch (Exception)
             {
@@ -275,23 +289,24 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                int maxCount = 0;
+                int maxCount = 0; // Initializing variables to keep track of max consecutive ones and current consecutive ones
+                
                 int currentCount = 0;
 
                 foreach (int num in nums)
                 {
-                    if (num == 1)
+                    if (num == 1) // If the current number is 1, increment the count of consecutive ones and update maxCount if neede
                     {
                         currentCount++;
                         maxCount = Math.Max(maxCount, currentCount);
                     }
-                    else
+                    else // If the current number is 0, reset the count of consecutive ones
                     {
                         currentCount = 0;
                     }
                 }
 
-                return maxCount;
+                return maxCount; // Return the maximum count of consecutive ones
             }
             catch (Exception)
             {
@@ -326,16 +341,23 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
+                // Initializing variables for the decimal number and the base value
                 int decimalNum = 0;
                 int baseValue = 1;
+
+                // Iterate until the binary number is greater than 0
                 while (binary > 0)
                 {
-                    int lastDigit = binary % 10;
-                    binary /= 10;
+                    int lastDigit = binary % 10; // Get the last digit of the binary number
+
+                    binary /= 10; // Remove the last digit from the binary number
+
+                    // Update the decimal number by adding the last digit multiplied by the base value
                     decimalNum += lastDigit * baseValue;
-                    baseValue *= 2;
+
+                    baseValue *= 2; // Update the base value by multiplying it by 2 for the next digit position
                 }
-                return decimalNum;
+                return decimalNum;  // Return the decimal equivalent of the binary number
             }
             catch (Exception)
             {
@@ -372,11 +394,17 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                Array.Sort(nums);
+                Array.Sort(nums); // Sorting the input array
+
                 int maxGap = 0;
-                for (int i = 1; i < nums.Length; i++)
+
+                for (int i = 1; i < nums.Length; i++) // Iterate through the sorted array to find the maximum gap between consecutive elements
                 {
-                    maxGap = Math.Max(maxGap, nums[i] - nums[i - 1]);
+                    // Calculate the difference between the current and previous elements
+                    int currentGap = nums[i] - nums[i - 1];
+
+                    // Update maxGap if the current gap is greater
+                    maxGap = Math.Max(maxGap, currentGap);
                 }
                 return maxGap;
             }
@@ -417,15 +445,16 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                Array.Sort(nums);
-                for (int i = nums.Length - 1; i >= 2; i--)
+                Array.Sort(nums); // Sort the input array in non-decreasing order
+
+                for (int i = nums.Length - 1; i >= 2; i--) // Iterate from the end of the sorted array
                 {
-                    if (nums[i - 1] + nums[i - 2] > nums[i])
+                    if (nums[i - 1] + nums[i - 2] > nums[i]) // Check if the sum of the two smaller sides is greater than the largest side
                     {
-                        return nums[i - 1] + nums[i - 2] + nums[i];
+                        return nums[i - 1] + nums[i - 2] + nums[i]; // If the condition is met, return the sum of the sides (perimeter)
                     }
                 }
-                return 0;
+                return 0; // If no valid triangle is found, return 0
             }
             catch (Exception)
             {
@@ -478,12 +507,16 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
+                // Repeat until all occurrences of 'part' are removed from 's'
                 while (s.Contains(part))
                 {
+                    // Find the index of the first occurrence of 'part' in 's'
                     int index = s.IndexOf(part);
+
+                    // Remove 'part' from 's'
                     s = s.Remove(index, part.Length);
                 }
-                return s;
+                return s; // Return the modified string 's'
             }
             catch (Exception)
             {
